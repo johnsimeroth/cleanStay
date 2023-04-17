@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "cleanstay",
+    "slug": "cleanstay",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "cleanstay"
+}
