@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, FlatList, Button } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView } from 'react-native';
 import axios from 'axios';
 
 import styles from './lib/styles.js';
@@ -26,6 +26,7 @@ export default function App() {
 
   return (
       <SafeAreaView style={styles.safe}>
+        <ScrollView style={styles.scrollView}>
         {screen === 'Home' && <Home properties={properties} />}
         {screen === 'Tasks' && <Tasks
           tasks={(properties.map((property) => property.tasks)).flat(1)}
@@ -33,6 +34,7 @@ export default function App() {
           refreshFunc={getAndSetProperties}
         />}
         {screen === 'Money' && <Money />}
+        </ScrollView>
         <Nav navigateTo={navigateTo} />
       </SafeAreaView>
   );

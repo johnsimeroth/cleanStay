@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, TouchableHighlight } from 'react-native';
 import styles from '../../lib/styles.js';
 
-export default function Task({ task, handlePress }) {
+export default function Task({ task, handlePress, formatDateString }) {
   const [dateString, setDateString] = useState('');
-  useEffect(() => {
-    const due = new Date(task.due);
-    const dueString = `${due.getMonth() + 1}/${due.getDate()}`;
-    setDateString(dueString);
-  }, [task])
+  useEffect(() => {setDateString(formatDateString(task.due))}, [task]);
 
   return (
     <TouchableHighlight
