@@ -1,48 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, FlatList, TouchableHighlight } from 'react-native';
 import styles from '../lib/styles.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
-function NavButton({ options, state, descriptors, navigation, label, route, index }) {
-
-  const isFocused = state.index === index;
-
-  const onPress = () => {
-    const event = navigation.emit({
-      type: 'tabPress',
-      target: route.key,
-    });
-
-    if (!isFocused && !event.defaultPrevented) {
-      navigation.navigate(route.name);
-    }
-  };
-
-  const onLongPress = () => {
-    navigation.emit({
-      type: 'tabLongPress',
-      target: route.key,
-    });
-  };
+function NavButton({ navTo, route, icon }) {
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      onLongPress={onLongPress}
-      style={{ flex: 1 }}
+    <TouchableHighlight
+      underlayColor='#00A2FF'
+      onPress={(e) => navTo(route)}
+      style={styles.container}
     >
-      <MaterialCommunityIcons name="home-roof" size={24} color="black" />
-    </TouchableOpacity>
+      {icon()}
+    </TouchableHighlight>
   );
 }
 
 
-export default function Nav({ state, descriptors, navigation }) {
+export default function Nav({ navigateTo }) {
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <NavButton />
-      <NavButton />
-      <NavButton />
+    <View style={styles.navBar}>
+      <NavButton
+        navTo={navigateTo}
+        route={'Home'}
+        icon={() => <MaterialCommunityIcons name="home-roof" size={24} color="white" />}
+      />
+      <NavButton
+        navTo={navigateTo}
+        route={'Scheduling'}
+        icon={() => <Feather name="calendar" size={24} color="white" />}
+      />
+      <NavButton
+        navTo={navigateTo}
+        route={'Money'}
+        icon={() => <MaterialCommunityIcons name="hand-coin-outline" size={24} color="white" />}
+      />
+
     </View>
   );
 }

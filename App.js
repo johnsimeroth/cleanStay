@@ -1,33 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, FlatList } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import axios from 'axios';
 
 import styles from './lib/styles.js';
 import Home from './components/Home.jsx';
-import Scheduling from './components/Scheduling.jsx';
+import Tasks from './components/Tasks.jsx';
 import Money from './components/Money.jsx';
 import Nav from './components/Nav.jsx';
 
-const Tab = createBottomTabNavigator();
-
 export default function App() {
+  [screen, setScreen] = useState('Home');
+  [properties, setProperties] = useState([]);
+  useEffect(() => {getAndSetProperties()}, []);
+
+  async function getAndSetProperties() {
+      axios.get('http://localhost:8000/properties')
+        .then(({ data }) => setProperties(data))
+        .catch((err) => console.error('Failed to get reservations', err));
+  }
+
+  function navigateTo (newScreen) {
+    setScreen(newScreen);
+  }
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBar={(props) => <Nav {...props} />}
-        screenOptions={{
-          tabBarShowLabel: false,
-        }}
-      >
-          <Tab.Screen
-            name='Home'
-            component={Home}
-          />
-          <Tab.Screen name='Scheduling' component={Scheduling} />
-          <Tab.Screen name='Money' component={Money} />
-        </Tab.Navigator>
-    </NavigationContainer>
+      <SafeAreaView style={styles.safe}>
+        {screen === 'Home' && <Home properties={properties} />}
+        {screen === 'Tasks' && <Tasks />}
+        {screen === 'Money' && <Money />}
+        <Nav navigateTo={navigateTo}/>
+      </SafeAreaView>
   );
 }
