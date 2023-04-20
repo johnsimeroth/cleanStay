@@ -28,7 +28,7 @@ export default function Nav({ navigateTo }) {
       />
       <NavButton
         navTo={navigateTo}
-        route={'Scheduling'}
+        route={'Tasks'}
         icon={() => <Feather name="calendar" size={24} color="white" />}
       />
       <NavButton
