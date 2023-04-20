@@ -12,6 +12,6 @@ export default function Home({ properties }) {
         <Dashboard />
         {properties.length !== 0 && <AddressList properties={properties}/>}
       </ScrollView>
-    </View>Í
+    </View>
   );
 }
