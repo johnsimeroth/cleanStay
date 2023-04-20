@@ -12,13 +12,14 @@ export default function CleanCompleteForm({ task, closeModal, handleSubmit }) {
   };
 
   function resetAndClose() {
-
+    setDate(new Date());
+    closeModal();
   }
 
   return (
     <View style={styles.modal}>
       <Text style={[styles.big2, { paddingBottom: 20 }]}>Schedule a Task</Text>
-      <Text style={styles.big4}>Task: {task.description}</Text>
+      <Text style={styles.big4}>Task: {task.description + '\n\n'}</Text>
 
       <View style={styles.container}>
         <Text>Schedule for: {date.toLocaleString()}</Text>
@@ -41,7 +42,7 @@ export default function CleanCompleteForm({ task, closeModal, handleSubmit }) {
         <Button
           title='Submit'
           onPress={() => {
-            handleSubmit(task, stars, issues, comments);
+            handleSubmit(task, date);
             resetAndClose();
           }}
         />
