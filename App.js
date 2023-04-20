@@ -26,7 +26,6 @@ export default function App() {
 
   return (
       <SafeAreaView style={styles.safe}>
-        <ScrollView style={styles.scrollView}>
         {screen === 'Home' && <Home properties={properties} />}
         {screen === 'Tasks' && <Tasks
           tasks={(properties.map((property) => property.tasks)).flat(1)}
@@ -34,7 +33,6 @@ export default function App() {
           refreshFunc={getAndSetProperties}
         />}
         {screen === 'Money' && <Money />}
-        </ScrollView>
         <Nav navigateTo={navigateTo} />
       </SafeAreaView>
   );
