@@ -12,7 +12,6 @@ import Nav from './components/Nav.jsx';
 export default function App() {
   [screen, setScreen] = useState('Home');
   [properties, setProperties] = useState([]);
-  // [tasks, setTasks] = useState([]);
   useEffect(() => { getAndSetProperties() }, []);
 
   async function getAndSetProperties() {
@@ -26,14 +25,15 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
-      {screen === 'Home' && <Home properties={properties} />}
-      {screen === 'Tasks' && <Tasks
-        tasks={(properties.map((property) => property.tasks)).flat(1)}
-        propertyIDs={(properties.map((property) => property.details.id))}
-      />}
-      {screen === 'Money' && <Money />}
-      <Nav navigateTo={navigateTo} />
-    </SafeAreaView>
+      <SafeAreaView style={styles.safe}>
+        {screen === 'Home' && <Home properties={properties} />}
+        {screen === 'Tasks' && <Tasks
+          tasks={(properties.map((property) => property.tasks)).flat(1)}
+          propertyIDs={(properties.map((property) => property.details.id))}
+          refreshFunc={getAndSetProperties}
+        />}
+        {screen === 'Money' && <Money />}
+        <Nav navigateTo={navigateTo} />
+      </SafeAreaView>
   );
 }
