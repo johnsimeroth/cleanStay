@@ -2,9 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, TouchableHighlight } from 'react-native';
 import styles from '../../lib/styles.js';
 
+const colors = [ '#ee220c', '#fae232', '#1db100' ];
+const size = 20;
+
 export default function Task({ task, handlePress, formatDateString }) {
   const [dateString, setDateString] = useState('');
   useEffect(() => {setDateString(formatDateString(task.due))}, [task]);
+
+  function createStyle (priority) {
+    return {
+      height: size,
+      width: size,
+      borderRadius: size / 2,
+      backgroundColor: colors[priority - 1],
+    }
+  }
 
   return (
     <TouchableHighlight
@@ -21,7 +33,8 @@ export default function Task({ task, handlePress, formatDateString }) {
           <Text style={styles.big5}>{dateString}</Text>
         </View>
         <View style={styles.bottomCenterFlex} >
-          <Text style={styles.big5}>{task.priority}</Text>
+          {/* <Text style={styles.big5}>{task.priority}</Text> */}
+          <View style={createStyle(task.priority)}/>
         </View>
       </View>
     </TouchableHighlight>
