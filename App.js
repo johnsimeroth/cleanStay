@@ -15,7 +15,7 @@ export default function App() {
   useEffect(() => { getAndSetProperties() }, []);
 
   async function getAndSetProperties() {
-    axios.get('http://localhost:8000/properties')
+    axios.get('http://192.168.50.80:8000/properties')
       .then(({ data }) => setProperties(data))
       .catch((err) => console.error('Failed to get reservations', err));
   }
