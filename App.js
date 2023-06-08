@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { NativeBaseProvider, Box, Center, Text } from 'native-base';
+import { NativeBaseProvider, Box, Center, Text, ScrollView } from 'native-base';
 import axios from 'axios';
 import {
   createUserWithEmailAndPassword,
@@ -57,16 +57,16 @@ export default function App() {
   function handleSignup(newUser) {
     createUserWithEmailAndPassword(auth, newUser.email, newUser.password1)
       .then((cred) => setUser(JSON.stringify(cred)))
-      .catch((err) => console.error(err))
+      .catch((err) => console.error(err));
   }
 
   return (
     <NativeBaseProvider>
       <Box safeArea flex={1}>
-        <SignUp handleSignup={handleSignup} />
-        <Text>
-          {user}
-        </Text>
+        <ScrollView>
+          <SignUp handleSignup={handleSignup} />
+          <Text>{user}</Text>
+        </ScrollView>
       </Box>
     </NativeBaseProvider>
   );
