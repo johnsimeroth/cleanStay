@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, FlatList } from 'react-native';
 import styles from '../../lib/styles.js';
 
-import PropertyView from './PropertyView.jsx';
+import PropertyView from './PropertyView';
 
 
 export default function AddressList({ properties }) {

@@ -8,14 +8,14 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 
-import { auth } from './lib/firebaseConfig.js';
+import { auth } from './lib/firebaseConfig';
 
 import SignUp from './components/SignUp';
-// import styles from './lib/styles.js';
-// import Home from './components/Home.jsx';
-// import Tasks from './components/Tasks.jsx';-
-// import Money from './components/Money.jsx';
-// import Nav from './components/Nav.jsx';
+// import styles from './lib/styles';
+// import Home from './components/Home';
+// import Tasks from './components/Tasks';
+// import Money from './components/Money';
+// import Nav from './components/Nav';
 
 export default function App() {
   // const [screen, setScreen] = useState('Home');
@@ -52,11 +52,11 @@ export default function App() {
   // );
 
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
 
   function handleSignup(newUser) {
     createUserWithEmailAndPassword(auth, newUser.email, newUser.password1)
-      .then((cred) => setUser(JSON.stringify(cred)))
+      .then((cred) => setUser(cred))
       .catch((err) => console.error(err));
   }
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, FlatList, ScrollView } from 'react-native';
-import Task from './tasks/Task.jsx';
-import TaskViewHeader from './tasks/TaskViewHeader.jsx';
-import CleanCompleteForm from './tasks/CleanCompleteForm.jsx';
-import ScheduleTaskForm from './tasks/ScheduleTaskForm.jsx';
+import Task from './tasks/Task';
+import TaskViewHeader from './tasks/TaskViewHeader';
+import CleanCompleteForm from './tasks/CleanCompleteForm';
+import ScheduleTaskForm from './tasks/ScheduleTaskForm';
 import styles from '../lib/styles.js';
 import axios from 'axios';
 import Modal from 'react-native-modal';
