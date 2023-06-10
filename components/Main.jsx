@@ -9,10 +9,6 @@ import {
 } from 'firebase/auth';
 
 import { auth } from '../lib/firebaseConfig';
-import {
-  useCheckStoredJWTQuery,
-  useStoreJWTMutation,
-} from '../lib/redux/services/auth';
 import SignUp from './login/SignUp';
 import SignIn from './login/SignIn';
 import Home from './Home';
@@ -23,34 +19,17 @@ import Home from './Home';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const { data: token, isLoading, isError } = useCheckStoredJWTQuery();
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    console.log('token is: ', token);
-  }, [token])
-  // const [user, setUser] = useState(null);
-
-  // function handleSignUp(newUser) {
-  //   createUserWithEmailAndPassword(auth, newUser.email, newUser.password1)
-  //     .then((cred) => setUser(cred))
-  //     .then(() => navigation.navigate('Home'))
-  //     .catch((err) => console.error(err));
-  // }
-
-  // function handleSignIn(existingUser, navigation, reset) {
-  //   signInWithEmailAndPassword(auth, existingUser.email, existingUser.password)
-  //     .then((cred) => setUser(cred))
-  //     .then(() => navigation.navigate('Home'))
-  //     .catch((err) => console.error(err));
-  // }
-
-  // function handleSignOut(navigation) {
-  //   setUser(null);
-  //   navigation.navigate('SignIn');
-  // }
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
 
   return (
-    <Stack.Navigator initialRouteName={token ? 'Home' : 'SignIn'}>
-      {token ? (
+    <Stack.Navigator initialRouteName={user ? 'Home' : 'Sign In'}>
+      {user ? (
         <Stack.Screen
           name='Home'
           children={(props) => <Home {...props} properties={[]} />}
@@ -58,11 +37,11 @@ export default function App() {
       ) : (
         <>
           <Stack.Screen
-            name='SignIn'
+            name='Sign In'
             children={(props) => <SignIn {...props} />}
           />
           <Stack.Screen
-            name='SignUp'
+            name='Sign Up'
             children={(props) => <SignUp {...props} />}
           />
         </>
