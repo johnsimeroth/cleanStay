@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, FlatList, TouchableHighlight } from 'react-native';
-import styles from '../lib/styles.js';
+import styles from '../lib/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 

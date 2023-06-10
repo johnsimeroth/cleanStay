@@ -4,7 +4,7 @@ import Task from './tasks/Task';
 import TaskViewHeader from './tasks/TaskViewHeader';
 import CleanCompleteForm from './tasks/CleanCompleteForm';
 import ScheduleTaskForm from './tasks/ScheduleTaskForm';
-import styles from '../lib/styles.js';
+import styles from '../lib/styles';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 

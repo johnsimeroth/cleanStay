@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, FlatList } from 'react-native';
-import styles from '../../lib/styles.js';
+import styles from '../../lib/styles';
 
 const today = new Date();
 const aWeekFromToday = new Date();

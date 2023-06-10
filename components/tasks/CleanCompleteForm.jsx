@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, Button } from 'react-native';
-import styles from '../../lib/styles.js';
+import styles from '../../lib/styles';
 import StarRating from 'react-native-star-rating';
 
 export default function CleanCompleteForm({ task, closeModal, handleSubmit }) {

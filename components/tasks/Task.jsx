@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, TouchableHighlight } from 'react-native';
-import styles from '../../lib/styles.js';
+import styles from '../../lib/styles';
 
 const colors = [ '#ee220c', '#fae232', '#1db100' ];
 const size = 20;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, FlatList } from 'react-native';
 import MoneyDashboard from './money/MoneyDashboard';
-import styles from '../lib/styles.js';
+import styles from '../lib/styles';
 
 export default function Money() {
 
