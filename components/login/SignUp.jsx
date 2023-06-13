@@ -18,7 +18,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithRedirect,
 } from 'firebase/auth';
+import { GoogleAuthProvider } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
 
 import { auth } from '../../lib/firebaseConfig';
 
@@ -59,6 +63,10 @@ export default function SignUp({ navigation }) {
         else {console.error(e)}
         setIsSubmitting(false);
       });
+  }
+
+  function altSignup() {
+    signInWithRedirect(auth, provider);
   }
 
   return (
@@ -152,6 +160,10 @@ export default function SignUp({ navigation }) {
 
           <Button mt='2' colorScheme='indigo' onPress={handleSubmit(onSubmit)}>
             Sign up
+          </Button>
+
+          <Button onPress={altSignup}>
+            Sign up with Google
           </Button>
         </VStack>
       </Box>
