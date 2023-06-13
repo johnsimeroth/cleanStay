@@ -11,5 +11,5 @@ This is a mobile-first app that helps short term rental cleaners and hosts manag
 This app will be a quality of life and productivity tool for both cleaners and hosts... But unlike most other apps out there, when we have to make trade offs, we'll lean toward cleaners first, because the best way to help a host is to help their cleaners.
 
 ## First cut demo
-![cleanStay demo](https://github.com/[johnsimeroth]/[cleanStay]/assets/MVP_cleanstay_demo.gif)
+![cleanStay demo]([https://github.com/[johnsimeroth]/[cleanStay]/assets/MVP_cleanstay_demo.gif](https://github.com/johnsimeroth/cleanStay/blob/main/assets/MVP_cleanstay_demo.gif))
 
