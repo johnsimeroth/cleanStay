@@ -1,16 +1,12 @@
-import { useState, useEffect } from 'react';
-import { Box, Center, Text, ScrollView } from 'native-base';
+import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import axios from 'axios';
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-} from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../lib/firebaseConfig';
 import SignUp from './login/SignUp';
 import SignIn from './login/SignIn';
+import UserInfo from './login/UserInfo';
+import AddProperties from './login/AddProperties';
 import Home from './Home';
 // import Tasks from './Tasks';
 // import Money from './Money';
@@ -27,6 +23,7 @@ export default function App() {
     });
   }, []);
 
+  // TODO: use redux to pass needed props to components instead of passing as children.
   return (
     <Stack.Navigator initialRouteName={user ? 'Home' : 'Sign In'}>
       {user ? (
@@ -43,6 +40,14 @@ export default function App() {
           <Stack.Screen
             name='Sign Up'
             children={(props) => <SignUp {...props} />}
+          />
+          <Stack.Screen
+            name='About You'
+            children={(props) => <UserInfo {...props} />}
+          />
+          <Stack.Screen
+            name='Add Properties'
+            children={(props) => <AddProperties {...props} />}
           />
         </>
       )}

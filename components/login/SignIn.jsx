@@ -1,43 +1,22 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  NativeBaseProvider,
   Box,
-  Input,
   Center,
   Heading,
   VStack,
   FormControl,
   Button,
-  KeyboardAvoidingView,
   Link,
   HStack,
   Text,
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
 } from 'firebase/auth';
 
 import { auth } from '../../lib/firebaseConfig';
-
-function linkUiToFormControl(placeholder = '', isPassword = false) {
-  return ({
-    field: { onChange, onBlur, value, name, ref },
-    fieldState: { invalid, isTouched, isDirty, error },
-    formState,
-  }) => (
-    <Input
-      onBlur={onBlur}
-      placeholder={placeholder}
-      onChangeText={(val) => onChange(val)}
-      value={value}
-      type={isPassword ? 'password' : 'text'}
-      autoCapitalize='none'
-    />
-  );
-}
+import getControlledInput from './getControlledInput';
 
 export default function SignIn({ navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +24,6 @@ export default function SignIn({ navigation }) {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
     setError,
   } = useForm();
 
@@ -97,7 +75,7 @@ export default function SignIn({ navigation }) {
             <FormControl.Label>Email</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('example@domain.com')}
+              render={getControlledInput('example@domain.com')}
               name='email'
               rules={{ required: 'Email address is required' }}
             />
@@ -110,7 +88,7 @@ export default function SignIn({ navigation }) {
             <FormControl.Label>Password</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('', true)}
+              render={getControlledInput('', true)}
               name='password'
               rules={{
                 required: 'Password is required',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Input,
   Center,
   Heading,
   VStack,
@@ -11,9 +12,23 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebaseConfig';
-import getControlledInput from './getControlledInput';
 
-export default function SignUp({ navigation }) {
+function linkUiToFormControl(placeholder = '', isPassword = false) {
+  return function linkUi({ field: { onChange, onBlur, value } }) {
+    return (
+      <Input
+        onBlur={onBlur}
+        placeholder={placeholder}
+        onChangeText={(val) => onChange(val)}
+        value={value}
+        type={isPassword ? 'password' : 'text'}
+        autoCapitalize='none'
+      />
+    );
+  };
+}
+
+export default function AddProperties({ navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     control,
@@ -69,7 +84,7 @@ export default function SignUp({ navigation }) {
             <FormControl.Label>Email</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('example@domain.com')}
+              render={linkUiToFormControl('example@domain.com')}
               name='email'
               rules={{
                 required: 'Email address is required',
@@ -100,7 +115,7 @@ export default function SignUp({ navigation }) {
             <FormControl.Label>Password</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('', true)}
+              render={linkUiToFormControl('', true)}
               name='password1'
               rules={{
                 required: 'Password is required',
@@ -119,7 +134,7 @@ export default function SignUp({ navigation }) {
             <FormControl.Label>ConfirmPassword</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('', true)}
+              render={linkUiToFormControl('', true)}
               name='password2'
               rules={{
                 required: 'Password is required',
