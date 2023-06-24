@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Switch, useColorMode } from 'native-base';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../lib/firebaseConfig';
@@ -14,6 +15,17 @@ import Home from './Home';
 
 const Stack = createNativeStackNavigator();
 
+function getSwitch() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const isChecked = colorMode === 'dark';
+  return (
+    <Switch
+      isChecked={isChecked}
+      onToggle={toggleColorMode}
+    />
+  );
+}
+
 export default function App() {
   const [user, setUser] = useState(null);
 
@@ -25,7 +37,10 @@ export default function App() {
 
   // TODO: use redux to pass needed props to components instead of passing as children.
   return (
-    <Stack.Navigator initialRouteName={user ? 'Home' : 'Sign In'}>
+    <Stack.Navigator
+      initialRouteName={user ? 'Home' : 'Sign In'}
+      screenOptions={{ headerRight: getSwitch }}
+    >
       {user ? (
         <Stack.Screen
           name='Home'

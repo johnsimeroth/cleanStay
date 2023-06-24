@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 import { auth } from '../../lib/firebaseConfig';
+import getControlledInput from './getControlledInput';
 
 export default function UserInfo({ navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,7 +68,7 @@ export default function UserInfo({ navigation }) {
             <FormControl.Label>Email</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('example@domain.com')}
+              render={getControlledInput('example@domain.com')}
               name='email'
               rules={{
                 required: 'Email address is required',
@@ -98,7 +99,7 @@ export default function UserInfo({ navigation }) {
             <FormControl.Label>Password</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('', true)}
+              render={getControlledInput('', true)}
               name='password1'
               rules={{
                 required: 'Password is required',
@@ -117,7 +118,7 @@ export default function UserInfo({ navigation }) {
             <FormControl.Label>ConfirmPassword</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('', true)}
+              render={getControlledInput('', true)}
               name='password2'
               rules={{
                 required: 'Password is required',

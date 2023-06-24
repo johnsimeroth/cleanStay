@@ -50,20 +50,12 @@ export default function SignIn({ navigation }) {
       <Box p='2' w='90%' maxW='290' py='8'>
         <Heading
           size='lg'
-          color='coolGray.800'
-          _dark={{
-            color: 'warmGray.50',
-          }}
           fontWeight='semibold'
         >
           Welcome
         </Heading>
         <Heading
           mt='1'
-          color='coolGray.600'
-          _dark={{
-            color: 'warmGray.200',
-          }}
           fontWeight='medium'
           size='xs'
         >
@@ -103,7 +95,6 @@ export default function SignIn({ navigation }) {
             isLoading={isSubmitting}
             isLoadingText='Logging in...'
             mt='2'
-            colorScheme='indigo'
             onPress={handleSubmit(onSubmit)}
           >
             Sign in
@@ -111,17 +102,12 @@ export default function SignIn({ navigation }) {
           <HStack mt='6' justifyContent='center'>
             <Text
               fontSize='sm'
-              color='coolGray.600'
-              _dark={{
-                color: 'warmGray.200',
-              }}
             >
               I'm a new user.{' '}
             </Text>
             <Link
               onPress={() => navigation.navigate('Sign Up')}
               _text={{
-                color: 'indigo.500',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}
