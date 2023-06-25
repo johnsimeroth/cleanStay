@@ -9,7 +9,7 @@ import {
   Link,
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
-import { auth } from '../../lib/firebaseConfig';
+
 import getControlledInput from './getControlledInput';
 
 export default function UserInfo({ navigation }) {
@@ -23,118 +23,71 @@ export default function UserInfo({ navigation }) {
 
   async function onSubmit(data) {
     setIsSubmitting(true);
-    createUserWithEmailAndPassword(auth, data.email, data.password1)
-      .then(() => setIsSubmitting(false))
-      .catch((e) => {
-        if (e.message.includes('(auth/email-already-in-use)')) {
-          setError('email', {
-            type: 'emailTaken',
-            message: 'An account with this address already exists.',
-          });
-        } else {
-          console.error(e);
-        }
-        setIsSubmitting(false);
-      });
+    setIsSubmitting(false);
   }
 
   return (
     <Center w='100%'>
       <Box p='2' w='90%' maxW='290' py='8'>
-        <Heading
-          size='lg'
-          color='coolGray.800'
-          _dark={{
-            color: 'warmGray.50',
-          }}
-          fontWeight='semibold'
-        >
+        <Heading size='lg' fontWeight='semibold'>
           Welcome
         </Heading>
-        <Heading
-          mt='1'
-          color='coolGray.600'
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          fontWeight='medium'
-          size='xs'
-        >
+        <Heading mt='1' fontWeight='medium' size='xs'>
           Sign up to continue!
         </Heading>
 
         <VStack space={3} mt='5'>
-          <FormControl isRequired isInvalid={'email' in errors}>
-            <FormControl.Label>Email</FormControl.Label>
+          <FormControl isRequired isInvalid={'firstName' in errors}>
+            <FormControl.Label>First name</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('example@domain.com')}
-              name='email'
+              render={getControlledInput()}
+              name='firstName'
               rules={{
-                required: 'Email address is required',
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: 'Must be a valid email address',
-                },
+                required: 'First name is required',
               }}
             />
             <FormControl.ErrorMessage>
-              {errors.email?.message}
+              {errors.firstName?.message}
             </FormControl.ErrorMessage>
           </FormControl>
-          {errors?.email?.type === 'emailTaken' && ( // TODO: make these links accessible by either replacing with button or figuring out url / deeplinking
-            <Link
-              onPress={() => navigation.navigate('Sign In')}
-              _text={{
-                color: 'indigo.500',
-                fontWeight: 'medium',
-                fontSize: 'sm',
-              }}
-            >
-              Sign in instead?
-            </Link>
-          )}
 
-          <FormControl isRequired isInvalid={'password1' in errors}>
-            <FormControl.Label>Password</FormControl.Label>
+          <FormControl isRequired isInvalid={'lastName' in errors}>
+            <FormControl.Label>Last name</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('', true)}
-              name='password1'
+              render={getControlledInput()}
+              name='lastName'
               rules={{
-                required: 'Password is required',
-                minLength: {
-                  value: 6,
-                  message: 'Password must be longer than 6 characters',
-                },
+                required: 'Last name is required',
               }}
             />
             <FormControl.ErrorMessage>
-              {errors.password1?.message}
+              {errors.lastName?.message}
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired isInvalid={'password2' in errors}>
-            <FormControl.Label>ConfirmPassword</FormControl.Label>
+          <FormControl isRequired isInvalid={'phone' in errors}>
+            <FormControl.Label>Phone number</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('', true)}
-              name='password2'
+              render={getControlledInput()}
+              name='phone'
               rules={{
-                required: 'Password is required',
-                validate: (v, values) => v === values.password1 || 'Passwords do not match',
-                minLength: {
-                  value: 6,
-                  message: 'Password must be longer than 6 characters',
-                },
+                required: 'Phone number is required',
               }}
             />
             <FormControl.ErrorMessage>
-              {errors.password2?.message}
+              {errors.phone?.message}
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <Button mt='2' colorScheme='indigo' onPress={handleSubmit(onSubmit)}>
+          <Button
+            mt='2'
+            isLoading={isSubmitting}
+            isLoadingText='Creating Account...'
+            onPress={handleSubmit(onSubmit)}
+          >
             Sign up
           </Button>
         </VStack>

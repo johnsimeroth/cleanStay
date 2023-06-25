@@ -12,7 +12,6 @@ import AddProperties from './login/AddProperties';
 import Home from './Home';
 // import Tasks from './Tasks';
 import Money from './Money';
-// import Nav from './Nav';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,19 +47,30 @@ export default function TopLevelNav() {
   //   return 'Sign In';
   // }
 
+  // TODO: figure out how to navigate from signup to intake forms
+  // I'm thinking I need to get rid of this conditional rendering stuff and
+  // manually handle navigating to tab navigator after successful login and
+  // just make sure this is done securely and also navigate during logout.
+
   return (
     <Stack.Navigator
-      initialRouteName={user ? 'Main App' : 'Sign In'}
+      initialRouteName={user ? 'About You' : 'Sign In'}
       screenOptions={{ headerRight: getDarkModeToggle }}
     >
       {user ? (
-        <Stack.Screen name='Tab Nav' component={TabNav} options={{headerShown: false}}/>
+        <>
+          <Stack.Screen name='About You' component={UserInfo} />
+          <Stack.Screen name='Add Properties' component={AddProperties} />
+          <Stack.Screen
+            name='Tab Nav'
+            component={TabNav}
+            options={{ headerShown: false }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen name='Sign In' component={SignIn} />
           <Stack.Screen name='Sign Up' component={SignUp} />
-          <Stack.Screen name='About You' component={UserInfo} />
-          <Stack.Screen name='Add Properties' component={AddProperties} />
         </>
       )}
     </Stack.Navigator>
