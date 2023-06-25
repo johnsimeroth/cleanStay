@@ -9,7 +9,7 @@ import {
   navThemeDark,
   navThemeLight,
 } from './lib/uiTheme';
-import Main from './components/Main';
+import TopLevelNav from './components/TopLevelNav';
 import store from './lib/redux/store';
 
 function NavWrapper() {
@@ -17,7 +17,7 @@ function NavWrapper() {
   const theme = colorMode === 'light' ? navThemeLight : navThemeDark;
   return (
     <NavigationContainer theme={theme}>
-      <Main />
+      <TopLevelNav />
     </NavigationContainer>
   );
 }

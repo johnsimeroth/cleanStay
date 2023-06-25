@@ -25,5 +25,6 @@ module.exports = {
     'jsx-quotes': [1, 'prefer-single'],
     'react/jsx-filename-extension': [1, { extensions: ['.jsx'] }],
     'react/prop-types': 0,
+    'object-curly-newline': 'off',
   },
 };

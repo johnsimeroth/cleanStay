@@ -42,25 +42,10 @@ export default function SignUp({ navigation }) {
   return (
     <Center w='100%'>
       <Box p='2' w='90%' maxW='290' py='8'>
-        <Heading
-          size='lg'
-          color='coolGray.800'
-          _dark={{
-            color: 'warmGray.50',
-          }}
-          fontWeight='semibold'
-        >
+        <Heading size='lg' fontWeight='semibold'>
           Welcome
         </Heading>
-        <Heading
-          mt='1'
-          color='coolGray.600'
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          fontWeight='medium'
-          size='xs'
-        >
+        <Heading mt='1' fontWeight='medium' size='xs'>
           Sign up to continue!
         </Heading>
 
@@ -87,7 +72,6 @@ export default function SignUp({ navigation }) {
             <Link
               onPress={() => navigation.navigate('Sign In')}
               _text={{
-                color: 'indigo.500',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}
@@ -123,7 +107,9 @@ export default function SignUp({ navigation }) {
               name='password2'
               rules={{
                 required: 'Password is required',
-                validate: (v, values) => v === values.password1 || 'Passwords do not match',
+                validate: (v, values) => (
+                  v === values.password1 || 'Passwords do not match'
+                ),
                 minLength: {
                   value: 6,
                   message: 'Password must be longer than 6 characters',
@@ -135,7 +121,12 @@ export default function SignUp({ navigation }) {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <Button mt='2' colorScheme='indigo' onPress={handleSubmit(onSubmit)}>
+          <Button
+            mt='2'
+            isLoading={isSubmitting}
+            isLoadingText='Creating Account...'
+            onPress={handleSubmit(onSubmit)}
+          >
             Sign up
           </Button>
         </VStack>
