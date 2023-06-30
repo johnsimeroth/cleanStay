@@ -23,6 +23,7 @@ export default function UserInfo({ navigation }) {
 
   async function onSubmit(data) {
     setIsSubmitting(true);
+
     setIsSubmitting(false);
   }
 
@@ -30,10 +31,10 @@ export default function UserInfo({ navigation }) {
     <Center w='100%'>
       <Box p='2' w='90%' maxW='290' py='8'>
         <Heading size='lg' fontWeight='semibold'>
-          Welcome
+          Thanks for creating an account!
         </Heading>
         <Heading mt='1' fontWeight='medium' size='xs'>
-          Sign up to continue!
+          We need a little more information to continue
         </Heading>
 
         <VStack space={3} mt='5'>
@@ -68,13 +69,21 @@ export default function UserInfo({ navigation }) {
           </FormControl>
 
           <FormControl isRequired isInvalid={'phone' in errors}>
-            <FormControl.Label>Phone number</FormControl.Label>
+            <FormControl.Label>U.S. phone number</FormControl.Label>
             <Controller
               control={control}
               render={getControlledInput()}
               name='phone'
               rules={{
                 required: 'Phone number is required',
+                minLength: {
+                  value: 10,
+                  message: 'Phone number must be a valid 10 digit number',
+                },
+                maxLength: {
+                  value: 10,
+                  message: 'Phone number must be a valid 10 digit number',
+                },
               }}
             />
             <FormControl.ErrorMessage>

@@ -1,78 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Switch, useColorMode } from 'native-base';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../lib/firebaseConfig';
+import TabNav from './TabNav';
 import SignUp from './login/SignUp';
 import SignIn from './login/SignIn';
 import UserInfo from './login/UserInfo';
 import AddProperties from './login/AddProperties';
-import Home from './Home';
-// import Tasks from './Tasks';
-import Money from './Money';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+
 function getDarkModeToggle() {
   const { colorMode, toggleColorMode } = useColorMode();
   const isChecked = colorMode === 'dark';
   return <Switch isChecked={isChecked} onToggle={toggleColorMode} />;
 }
 
-function TabNav() {
-  return (
-    <Tab.Navigator screenOptions={{ headerRight: getDarkModeToggle }}>
-      <Tab.Screen name='Home' component={Home} />
-      <Tab.Screen name='Money' component={Money} />
-      {/* <Tab.Screen name='Tasks' component={Tasks} /> */}
-    </Tab.Navigator>
-  );
+function getScreens(user, profileComplete) {
+  if (user && profileComplete) {
+    return {
+      initialRoute: 'Tab Nav',
+      screens: (
+        <Stack.Screen
+          name='Tab Nav'
+          component={TabNav}
+          options={{ headerShown: false }}
+        />
+      ),
+    };
+  }
+  if (user) {
+    return {
+      initialRoute: 'About You',
+      screens: (
+        <>
+          <Stack.Screen name='About You' component={UserInfo} />
+          <Stack.Screen name='Add Properties' component={AddProperties} />
+        </>
+      ),
+    };
+  }
+  return {
+    initialRoute: 'Sign In',
+    screens: (
+      <>
+        <Stack.Screen name='Sign In' component={SignIn} />
+        <Stack.Screen name='Sign Up' component={SignUp} />
+      </>
+    ),
+  };
 }
 
 export default function TopLevelNav() {
   const [user, setUser] = useState(null);
+  const [profileComplete, setProfileComplete] = useState(false);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
     });
   }, []);
 
-  // function getInitialRoute() {
-  //   if (user) {
-  //     if ()
-  //   }
-  //   return 'Sign In';
-  // }
-
-  // TODO: figure out how to navigate from signup to intake forms
-  // I'm thinking I need to get rid of this conditional rendering stuff and
-  // manually handle navigating to tab navigator after successful login and
-  // just make sure this is done securely and also navigate during logout.
-
   return (
     <Stack.Navigator
-      initialRouteName={user ? 'About You' : 'Sign In'}
+      initialRouteName={getScreens(user, profileComplete).initialRoute}
       screenOptions={{ headerRight: getDarkModeToggle }}
     >
-      {user ? (
-        <>
-          <Stack.Screen name='About You' component={UserInfo} />
-          <Stack.Screen name='Add Properties' component={AddProperties} />
-          <Stack.Screen
-            name='Tab Nav'
-            component={TabNav}
-            options={{ headerShown: false }}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name='Sign In' component={SignIn} />
-          <Stack.Screen name='Sign Up' component={SignUp} />
-        </>
-      )}
+      {getScreens(user, profileComplete).screens}
     </Stack.Navigator>
   );
 }
