@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, FlatList } from 'react-native';
-import styles from '../../lib/styles';
+import React from 'react';
+import { Box, Heading, Text, HStack, VStack } from 'native-base';
 
 export default function Dashboard() {
-
   return (
-    <View >
-      <Text style={styles.big2}>Today</Text>
-      <View style={styles.gridRow}>
+    <Box>
+      <Heading size='lg'>Today</Heading>
+      <HStack>
+        <VStack alignItems='center' flex={1}>
+          <Heading size='4xl'>3</Heading>
+          <Text fontSize='md' textAlign='center'>
+            Cleanings Scheduled
+          </Text>
+        </VStack>
 
-        <View style={styles.gridCol}>
-          <Text style={styles.big1} >3</Text>
-          <Text style={styles.big3} >Cleanings Scheduled</Text>
-        </View>
+        <VStack alignItems='center' flex={1}>
+          <Heading size='4xl'>2</Heading>
+          <Text fontSize='md' textAlign='center'>
+            Maintenance Tasks
+          </Text>
+        </VStack>
 
-        <View style={styles.gridCol}>
-          <Text style={styles.big1} >2</Text>
-          <Text style={styles.big3} >Maintenance Tasks</Text>
-        </View>
-
-        <View style={styles.gridCol}>
-          <Text style={styles.big1} >4</Text>
-          <Text style={styles.big3} >Total Homes{'\n'}</Text>
-        </View>
-
-      </View>
-    </View>
+        <VStack alignItems='center' flex={1}>
+          <Heading size='4xl'>4</Heading>
+          <Text fontSize='md' textAlign='center'>
+            Total Homes
+          </Text>
+        </VStack>
+      </HStack>
+    </Box>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Input,
   Center,
   Heading,
   VStack,
@@ -11,9 +12,23 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebaseConfig';
-import getControlledInput from './getControlledInput';
 
-export default function SignUp({ navigation }) {
+function linkUiToFormControl(placeholder = '', isPassword = false) {
+  return function linkUi({ field: { onChange, onBlur, value } }) {
+    return (
+      <Input
+        onBlur={onBlur}
+        placeholder={placeholder}
+        onChangeText={(val) => onChange(val)}
+        value={value}
+        type={isPassword ? 'password' : 'text'}
+        autoCapitalize='none'
+      />
+    );
+  };
+}
+
+export default function AddProperties({ navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     control,
@@ -42,10 +57,25 @@ export default function SignUp({ navigation }) {
   return (
     <Center w='100%'>
       <Box p='2' w='90%' maxW='290' py='8'>
-        <Heading size='lg' fontWeight='semibold'>
+        <Heading
+          size='lg'
+          color='coolGray.800'
+          _dark={{
+            color: 'warmGray.50',
+          }}
+          fontWeight='semibold'
+        >
           Welcome
         </Heading>
-        <Heading mt='1' fontWeight='medium' size='xs'>
+        <Heading
+          mt='1'
+          color='coolGray.600'
+          _dark={{
+            color: 'warmGray.200',
+          }}
+          fontWeight='medium'
+          size='xs'
+        >
           Sign up to continue!
         </Heading>
 
@@ -54,7 +84,7 @@ export default function SignUp({ navigation }) {
             <FormControl.Label>Email</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('example@domain.com')}
+              render={linkUiToFormControl('example@domain.com')}
               name='email'
               rules={{
                 required: 'Email address is required',
@@ -72,6 +102,7 @@ export default function SignUp({ navigation }) {
             <Link
               onPress={() => navigation.navigate('Sign In')}
               _text={{
+                color: 'indigo.500',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}
@@ -84,7 +115,7 @@ export default function SignUp({ navigation }) {
             <FormControl.Label>Password</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('', true)}
+              render={linkUiToFormControl('', true)}
               name='password1'
               rules={{
                 required: 'Password is required',
@@ -103,13 +134,11 @@ export default function SignUp({ navigation }) {
             <FormControl.Label>ConfirmPassword</FormControl.Label>
             <Controller
               control={control}
-              render={getControlledInput('', true)}
+              render={linkUiToFormControl('', true)}
               name='password2'
               rules={{
                 required: 'Password is required',
-                validate: (v, values) => (
-                  v === values.password1 || 'Passwords do not match'
-                ),
+                validate: (v, values) => v === values.password1 || 'Passwords do not match',
                 minLength: {
                   value: 6,
                   message: 'Password must be longer than 6 characters',
@@ -121,12 +150,7 @@ export default function SignUp({ navigation }) {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <Button
-            mt='2'
-            isLoading={isSubmitting}
-            isLoadingText='Creating Account...'
-            onPress={handleSubmit(onSubmit)}
-          >
+          <Button mt='2' colorScheme='indigo' onPress={handleSubmit(onSubmit)}>
             Sign up
           </Button>
         </VStack>

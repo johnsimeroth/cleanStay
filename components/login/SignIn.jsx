@@ -1,43 +1,22 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  NativeBaseProvider,
   Box,
-  Input,
   Center,
   Heading,
   VStack,
   FormControl,
   Button,
-  KeyboardAvoidingView,
   Link,
   HStack,
   Text,
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
 } from 'firebase/auth';
 
 import { auth } from '../../lib/firebaseConfig';
-
-function linkUiToFormControl(placeholder = '', isPassword = false) {
-  return ({
-    field: { onChange, onBlur, value, name, ref },
-    fieldState: { invalid, isTouched, isDirty, error },
-    formState,
-  }) => (
-    <Input
-      onBlur={onBlur}
-      placeholder={placeholder}
-      onChangeText={(val) => onChange(val)}
-      value={value}
-      type={isPassword ? 'password' : 'text'}
-      autoCapitalize='none'
-    />
-  );
-}
+import getControlledInput from './getControlledInput';
 
 export default function SignIn({ navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +24,6 @@ export default function SignIn({ navigation }) {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
     setError,
   } = useForm();
 
@@ -72,20 +50,12 @@ export default function SignIn({ navigation }) {
       <Box p='2' w='90%' maxW='290' py='8'>
         <Heading
           size='lg'
-          color='coolGray.800'
-          _dark={{
-            color: 'warmGray.50',
-          }}
           fontWeight='semibold'
         >
           Welcome
         </Heading>
         <Heading
           mt='1'
-          color='coolGray.600'
-          _dark={{
-            color: 'warmGray.200',
-          }}
           fontWeight='medium'
           size='xs'
         >
@@ -97,7 +67,7 @@ export default function SignIn({ navigation }) {
             <FormControl.Label>Email</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('example@domain.com')}
+              render={getControlledInput('example@domain.com')}
               name='email'
               rules={{ required: 'Email address is required' }}
             />
@@ -110,7 +80,7 @@ export default function SignIn({ navigation }) {
             <FormControl.Label>Password</FormControl.Label>
             <Controller
               control={control}
-              render={linkUiToFormControl('', true)}
+              render={getControlledInput('', true)}
               name='password'
               rules={{
                 required: 'Password is required',
@@ -125,7 +95,6 @@ export default function SignIn({ navigation }) {
             isLoading={isSubmitting}
             isLoadingText='Logging in...'
             mt='2'
-            colorScheme='indigo'
             onPress={handleSubmit(onSubmit)}
           >
             Sign in
@@ -133,17 +102,12 @@ export default function SignIn({ navigation }) {
           <HStack mt='6' justifyContent='center'>
             <Text
               fontSize='sm'
-              color='coolGray.600'
-              _dark={{
-                color: 'warmGray.200',
-              }}
             >
               I'm a new user.{' '}
             </Text>
             <Link
               onPress={() => navigation.navigate('Sign Up')}
               _text={{
-                color: 'indigo.500',
                 fontWeight: 'medium',
                 fontSize: 'sm',
               }}
