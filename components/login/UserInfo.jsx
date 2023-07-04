@@ -6,14 +6,19 @@ import {
   VStack,
   FormControl,
   Button,
-  Link,
+  ScrollView,
+  Text,
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 
+import {
+  useGetUserQuery,
+  useAddUserMutation,
+} from '../../lib/redux/services/auth';
+import { auth } from '../../lib/firebaseConfig';
 import getControlledInput from './getControlledInput';
 
-export default function UserInfo({ navigation }) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function UserInfo() {
   const {
     control,
     handleSubmit,
@@ -21,10 +26,13 @@ export default function UserInfo({ navigation }) {
     setError,
   } = useForm();
 
-  async function onSubmit(data) {
-    setIsSubmitting(true);
+  const { uid } = auth.currentUser;
+  console.log(uid);
+  const { data, error, isLoading } = useGetUserQuery(uid);
+  const [addUser, result] = useAddUserMutation();
 
-    setIsSubmitting(false);
+  async function onSubmit(formData) {
+    addUser({ uid, formData });
   }
 
   return (
@@ -91,9 +99,13 @@ export default function UserInfo({ navigation }) {
             </FormControl.ErrorMessage>
           </FormControl>
 
+          <ScrollView>
+            <Text>{JSON.stringify(data)}</Text>
+          </ScrollView>
+
           <Button
             mt='2'
-            isLoading={isSubmitting}
+            isLoading={isLoading}
             isLoadingText='Creating Account...'
             onPress={handleSubmit(onSubmit)}
           >

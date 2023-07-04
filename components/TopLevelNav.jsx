@@ -4,6 +4,7 @@ import { Switch, useColorMode } from 'native-base';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../lib/firebaseConfig';
+import { useGetUserQuery } from '../lib/redux/services/auth';
 import TabNav from './TabNav';
 import SignUp from './login/SignUp';
 import SignIn from './login/SignIn';
@@ -60,8 +61,15 @@ export default function TopLevelNav() {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setProfileComplete(false);
     });
   }, []);
+
+  // TODO: add splash screen while getUserQuery is loading
+  const { data } = useGetUserQuery(auth.currentUser?.uid);
+  if (data?.phone && !profileComplete) {
+    setProfileComplete(true);
+  }
 
   return (
     <Stack.Navigator
